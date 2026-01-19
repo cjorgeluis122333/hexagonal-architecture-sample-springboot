@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class LoanConfig {
+
     @Bean
-    public CreateLoanUseCase createLoanUseCase(LoanRepositoryPort repositoryPort) {
-        return new CreateLoanService(repositoryPort);
+    public CreateLoanService createLoanDomainService(LoanRepositoryPort loanRepositoryPort) {
+        return new CreateLoanService(loanRepositoryPort);
     }
 }

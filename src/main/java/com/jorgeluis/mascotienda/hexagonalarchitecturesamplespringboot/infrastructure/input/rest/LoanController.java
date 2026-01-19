@@ -1,5 +1,6 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.rest;
 
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.service.LoanApplicationService;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Money;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.command.CreateLoanCommand;
@@ -7,21 +8,19 @@ import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.po
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.request.LoanRequest;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.response.LoanResponse;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/loans")
+@AllArgsConstructor
 public class LoanController {
-    private final CreateLoanUseCase createLoanUseCase;
-
-    public LoanController(CreateLoanUseCase createLoanUseCase) {
-        this.createLoanUseCase = createLoanUseCase;
-    }
+    private final CreateLoanUseCase createLoanUseCase; // Para el POST
+    private final LoanApplicationService loanApplicationService; // Para los GET
 
     // Dentro de LoanController.java
     @PostMapping
@@ -45,5 +44,16 @@ public class LoanController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Loan> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(loanApplicationService.findById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Loan>> getAll() {
+        return ResponseEntity.ok(loanApplicationService.findAll());
+    }
+
 
 }
