@@ -2,8 +2,8 @@ package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastr
 
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Money;
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.CreateLoanCommand;
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.CreateLoanUseCase;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.command.CreateLoanCommand;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase.CreateLoanUseCase;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.request.LoanRequest;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.response.LoanResponse;
 import jakarta.validation.Valid;
@@ -45,13 +45,5 @@ public class LoanController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
-
-//    @PostMapping
-//    public ResponseEntity<LoanResponse> create(@RequestBody LoanRequest request) {
-//        var command = new CreateLoanCommand(new Money(request.amount(), "USD"), request.name());
-//        var loan = createLoanUseCase.createLoan(command);
-//        return ResponseEntity.ok(new LoanResponse(loan.getId(), loan.isApproved(),""));
-//    }
 
 }

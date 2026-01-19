@@ -1,7 +1,12 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
+@Getter
+@Setter
 public class Loan {
     private final Long id;
     private final Money amount;
@@ -21,25 +26,5 @@ public class Loan {
             this.approved = true;
         }
     }
-    // Getters...
 
-    public Long getId() {
-        return id;
-    }
-
-    public Money getAmount() {
-        return amount;
-    }
-
-    public String getBorrower() {
-        return borrower;
-    }
-
-    public boolean isApproved() {
-        return approved;
-    }
-
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
 }

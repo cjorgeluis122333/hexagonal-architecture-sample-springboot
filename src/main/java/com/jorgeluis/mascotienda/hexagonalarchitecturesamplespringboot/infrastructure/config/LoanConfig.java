@@ -1,6 +1,6 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.config;
 
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.CreateLoanUseCase;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase.CreateLoanUseCase;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.out.LoanRepositoryPort;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.service.CreateLoanService;
 import org.springframework.context.annotation.Bean;

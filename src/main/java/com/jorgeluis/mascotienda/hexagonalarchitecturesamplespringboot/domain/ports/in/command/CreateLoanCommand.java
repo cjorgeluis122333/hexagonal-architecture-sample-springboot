@@ -1,4 +1,4 @@
-package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in;
+package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.command;
 
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Money;
 
