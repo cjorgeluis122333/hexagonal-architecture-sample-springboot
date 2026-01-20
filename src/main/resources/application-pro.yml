@@ -1,0 +1,7 @@
+# application-prod.yml
+spring:
+  datasource:
+    password: ${DB_PASSWORD} # No hardcodear contraseñas en el código
+  jpa:
+    hibernate:
+      ddl-auto: validate

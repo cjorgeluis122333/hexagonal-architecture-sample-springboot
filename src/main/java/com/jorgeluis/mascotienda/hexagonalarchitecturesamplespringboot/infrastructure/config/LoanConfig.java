@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class LoanConfig {
-
     @Bean
     public CreateLoanService createLoanDomainService(LoanRepositoryPort loanRepositoryPort) {
+        // Ahora Java sí encuentra un constructor que acepte LoanRepositoryPort
         return new CreateLoanService(loanRepositoryPort);
     }
 }
