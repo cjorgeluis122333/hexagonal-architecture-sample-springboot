@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class Loan {
     private final Long id;
     private final Money amount;

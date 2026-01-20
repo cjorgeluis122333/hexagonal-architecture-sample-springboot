@@ -6,7 +6,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LoanRepositoryPort {
-    Loan save(Loan loan);
-    Optional<Loan> findById(Long id); // Para buscar uno solo
+    //Consult
+    Optional<Loan> findById(Long id);
     List<Loan> findAll();
+
+    //Update
+    Optional<Loan> update(Loan loan);
+
+    //Insert
+    Loan save(Loan loan);
+
+    //Delete
+    boolean deleteById(Long id);
 }
