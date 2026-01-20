@@ -1,5 +1,6 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.output.persisten.adapter;
 
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.exception.ResourceNotFoundException;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Money;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.out.LoanRepositoryPort;
@@ -38,13 +39,13 @@ public class JpaLoanAdapter implements LoanRepositoryPort {
     }
 
     @Override
-    public Optional<Loan> update(Loan loan) {
+    public Loan update(Loan loan) throws ResourceNotFoundException {
         if (repository.existsById(loan.getId())) {
             LoanEntity entity = new LoanEntity(loan.getId(), loan.getAmount().amount(), loan.getBorrower(), loan.isApproved());
             repository.save(entity);
-            return Optional.of(loan);
+            return loan;
         }
-        return Optional.empty();
+        throw new ResourceNotFoundException("Loan with id " + loan.getId() + " does not exist");
     }
 
     @Override

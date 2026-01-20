@@ -1,5 +1,6 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.out;
 
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.exception.ResourceNotFoundException;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface LoanRepositoryPort {
     List<Loan> findAll();
 
     //Update
-    Optional<Loan> update(Loan loan);
+    Loan update(Loan loan) throws ResourceNotFoundException;
 
     //Insert
     Loan save(Loan loan);

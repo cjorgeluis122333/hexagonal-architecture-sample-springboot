@@ -1,5 +1,6 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.config;
 
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.service.LoanApplicationService;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.usecase.CreateLoanUseCaseImplement;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.usecase.DeleteLoanUseCaseImplement;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.usecase.FindLoanUseCaseImplement;
@@ -46,8 +47,22 @@ public class LoanConfig {
     UpdateLoanUseCase updateLoanUseCase(LoanRepositoryPort loanRepositoryPort) {
         return new UpdateLoanUseCaseImplement(loanRepositoryPort);
     }
-    //=======================================    Service
-    //Application to Application  <-- Domain  (Require domain interface)
 
+    //=======================================    SERVICE
+    //Application to Application  <-- Domain  (Require domain interface)
+    @Bean
+    LoanApplicationService loanApplicationService(
+            CreateLoanUseCase createLoanUseCase,
+            UpdateLoanUseCase updateLoanUseCase,
+            DeleteLoanUseCase deleteLoanUseCase,
+            FindLoanUseCase findLoanUseCase
+    ) {
+        return new LoanApplicationService(
+                createLoanUseCase,
+                deleteLoanUseCase,
+                findLoanUseCase,
+                updateLoanUseCase
+        );
+    }
 
 }

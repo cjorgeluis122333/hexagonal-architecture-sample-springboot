@@ -39,7 +39,7 @@ public class LoanApplicationService implements CreateLoanUseCase, DeleteLoanUseC
     }
 
     @Override
-    public Optional<Loan> updateLoan(Loan loan, Long id) {
+    public Loan updateLoan(CreateLoanCommand loan, Long id) {
         return updateLoanUseCase.updateLoan(loan, id);
     }
 }

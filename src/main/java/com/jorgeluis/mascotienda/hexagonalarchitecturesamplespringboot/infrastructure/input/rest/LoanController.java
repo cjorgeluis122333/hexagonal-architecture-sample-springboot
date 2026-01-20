@@ -19,8 +19,8 @@ import java.util.List;
 @RequestMapping("/api/loans")
 @AllArgsConstructor
 public class LoanController {
-    private final CreateLoanUseCase createLoanUseCase; // Para el POST
-    private final LoanApplicationService loanApplicationService; // Para los GET
+
+    private final LoanApplicationService loanService; // Para los GET
 
     // Dentro de LoanController.java
     @PostMapping
@@ -33,7 +33,7 @@ public class LoanController {
         );
 
         // 2. Ejecutamos el Caso de Uso
-        Loan loan = createLoanUseCase.createLoan(command);
+        Loan loan = loanService.createLoan(command);
 
         // 3. Transformamos el Resultado (Dominio) a un Response (Infra/JSON)
         LoanResponse response = new LoanResponse(
@@ -45,14 +45,36 @@ public class LoanController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<LoanResponse> update(@Valid @RequestBody LoanRequest request,@PathVariable Long id) {
+        // 1. Transformamos el Request (Infra) a un Command (Dominio)
+        CreateLoanCommand command = new CreateLoanCommand(
+                new Money(request.amount(), "USD"),
+                request.name()
+        );
+
+        // 2. Ejecutamos el Caso de Uso
+        Loan loan = loanService.updateLoan(command,id);
+
+        // 3. Transformamos el Resultado (Dominio) a un Response (Infra/JSON)
+        LoanResponse response = new LoanResponse(
+                loan.getId(),
+                loan.isApproved(),
+                loan.isApproved() ? "Préstamo aprobado automáticamente" : "Pendiente de revisión"
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Loan> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(loanApplicationService.findById(id));
+        return ResponseEntity.ok(loanService.findLoanById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<Loan>> getAll() {
-        return ResponseEntity.ok(loanApplicationService.findAll());
+        return ResponseEntity.ok(loanService.findAllLoans());
     }
 
 
