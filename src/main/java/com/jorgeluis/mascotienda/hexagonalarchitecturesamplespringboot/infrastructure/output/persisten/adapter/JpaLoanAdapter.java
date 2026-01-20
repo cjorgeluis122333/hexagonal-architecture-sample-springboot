@@ -17,7 +17,6 @@ public class JpaLoanAdapter implements LoanRepositoryPort {
     public JpaLoanAdapter(JpaLoanRepository repository) {
         this.repository = repository;
     }
-
     @Override
     public Loan save(Loan loan) {
         // Mapeo: Dominio -> Entidad
@@ -25,6 +24,7 @@ public class JpaLoanAdapter implements LoanRepositoryPort {
         repository.save(entity);
         return loan;
     }
+
 
     @Override
     public Optional<Loan> findById(Long id) {
@@ -39,6 +39,6 @@ public class JpaLoanAdapter implements LoanRepositoryPort {
 
     // Método privado para evitar repetir código de mapeo (Nivel Senior)
     private Loan mapToDomain(LoanEntity entity) {
-        return new Loan(entity.getId(), new Money(entity.getAmount(), "Usd"), entity.getBorrower());
+        return new Loan(entity.getId(), new Money(entity.getAmount(), "Usd"), entity.getBorrower(),entity.isApproved());
     }
 }

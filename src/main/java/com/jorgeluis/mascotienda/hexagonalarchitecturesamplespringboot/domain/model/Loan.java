@@ -1,5 +1,6 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class Loan {
     private final Long id;
     private final Money amount;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.logging.ConsoleHandler;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,6 @@ public class LoanApplicationService implements CreateLoanUseCase {
     public Loan createLoan(CreateLoanCommand command) {
         // 1. Delegamos la lógica compleja al dominio
         Loan loanEvaluated = createLoanDomainService.execute(command);
-
         // 2. La aplicación decide persistir el resultado
         return loanRepositoryPort.save(loanEvaluated);
     }
