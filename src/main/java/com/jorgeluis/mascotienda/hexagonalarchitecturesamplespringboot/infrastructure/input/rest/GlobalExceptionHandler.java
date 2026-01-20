@@ -1,6 +1,6 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.rest;
 
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.exception.ResourceNotFoundException;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.exception.ResourceNotFoundException;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.exception.LoanDeniedException;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.response.ErrorResponse;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.out;
 
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.exception.ResourceNotFoundException;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.exception.ResourceNotFoundException;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
 
 import java.util.List;

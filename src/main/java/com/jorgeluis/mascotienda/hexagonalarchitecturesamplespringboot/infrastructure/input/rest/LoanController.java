@@ -4,7 +4,6 @@ import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.applicati
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Money;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.command.CreateLoanCommand;
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase.CreateLoanUseCase;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.request.LoanRequest;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.response.LoanResponse;
 import jakarta.validation.Valid;
@@ -27,43 +26,38 @@ public class LoanController {
     public ResponseEntity<LoanResponse> create(@Valid @RequestBody LoanRequest request) {
 
         // 1. Transformamos el Request (Infra) a un Command (Dominio)
-        CreateLoanCommand command = new CreateLoanCommand(
-                new Money(request.amount(), "USD"),
-                request.name()
-        );
+        CreateLoanCommand command = new CreateLoanCommand(new Money(request.amount(), "USD"), request.name());
 
         // 2. Ejecutamos el Caso de Uso
         Loan loan = loanService.createLoan(command);
 
         // 3. Transformamos el Resultado (Dominio) a un Response (Infra/JSON)
-        LoanResponse response = new LoanResponse(
-                loan.getId(),
-                loan.isApproved(),
-                loan.isApproved() ? "Préstamo aprobado automáticamente" : "Pendiente de revisión"
-        );
+        LoanResponse response = new LoanResponse(loan.getId(), loan.isApproved(), loan.isApproved() ? "Préstamo aprobado automáticamente" : "Pendiente de revisión");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LoanResponse> update(@Valid @RequestBody LoanRequest request,@PathVariable Long id) {
+    public ResponseEntity<LoanResponse> update(@Valid @RequestBody LoanRequest request, @PathVariable Long id) {
         // 1. Transformamos el Request (Infra) a un Command (Dominio)
-        CreateLoanCommand command = new CreateLoanCommand(
-                new Money(request.amount(), "USD"),
-                request.name()
-        );
+        CreateLoanCommand command = new CreateLoanCommand(new Money(request.amount(), "USD"), request.name());
 
         // 2. Ejecutamos el Caso de Uso
-        Loan loan = loanService.updateLoan(command,id);
+        Loan loan = loanService.updateLoan(command, id);
 
         // 3. Transformamos el Resultado (Dominio) a un Response (Infra/JSON)
-        LoanResponse response = new LoanResponse(
-                loan.getId(),
-                loan.isApproved(),
-                loan.isApproved() ? "Préstamo aprobado automáticamente" : "Pendiente de revisión"
-        );
+        LoanResponse response = new LoanResponse(loan.getId(), loan.isApproved(), loan.isApproved() ? "Préstamo aprobado automáticamente" : "Pendiente de revisión");
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if (loanService.deleteLoanUseCase(id)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
     }
 
