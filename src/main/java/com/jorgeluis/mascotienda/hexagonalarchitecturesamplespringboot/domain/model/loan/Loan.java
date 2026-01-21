@@ -1,6 +1,5 @@
-package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model;
+package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.loan;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

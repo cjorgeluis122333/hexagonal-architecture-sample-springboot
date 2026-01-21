@@ -1,0 +1,176 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Hexagonal Loan API
+meta:
+  id: wrk_35b6e8ee5458441a8503e5405e634aea
+  created: 1768873357914
+  modified: 1768873357914
+  description: ""
+collection:
+  - name: loan
+    meta:
+      id: fld_260ab2cffcae4eeca4891b5e3d4f3b4f
+      created: 1768954099025
+      modified: 1768954099025
+      sortKey: -1768954099025
+      description: ""
+    children:
+      - url: http://localhost:8037/api/loans
+        name: Crear Préstamo
+        meta:
+          id: req_e66a15046b7e4de0ab343c23c6aa234f
+          created: 1768873357921
+          modified: 1768954109971
+          isPrivate: false
+          description: ""
+          sortKey: -1768954102799
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"amount": 10088881,
+            	"name": "Jorge Luis"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8037/api/loans
+        name: Listar Todos
+        meta:
+          id: req_b5571367ad084ab194042c59d83675d3
+          created: 1768873357944
+          modified: 1768954107031
+          isPrivate: false
+          description: ""
+          sortKey: -1768954102699
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8037/api/loans/2
+        name: Obtener por ID
+        meta:
+          id: req_35b92f159e254ceea872efa297389da8
+          created: 1768873357971
+          modified: 1768954104430
+          isPrivate: false
+          description: ""
+          sortKey: -1768954102599
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8037/api/loans/1
+        name: Delete
+        meta:
+          id: req_772f902575ef493b8370b45fef479efa
+          created: 1768951858743
+          modified: 1768954102592
+          isPrivate: false
+          description: ""
+          sortKey: -1768954102499
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8037/api/loans/1
+        name: Update Préstamo
+        meta:
+          id: req_77ae6442f9c0470d8c50c85769e9c090
+          created: 1768951913668
+          modified: 1768954113382
+          isPrivate: false
+          description: ""
+          sortKey: -1768954102899
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"amount": 10088881,
+            	"name": "Jorge Luis"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: task_remote_api
+    meta:
+      id: fld_74f898bed99c402c8aa39dc4f7f24791
+      created: 1768954160846
+      modified: 1768954160846
+      sortKey: -1768954160846
+      description: ""
+    children:
+      - url: http://localhost:8037/api/tasks/112/additional-info
+        name: New Request
+        meta:
+          id: req_0f5233b13a3e492ab9fb2514396c3d6e
+          created: 1768954169225
+          modified: 1768954319475
+          isPrivate: false
+          description: ""
+          sortKey: -1768954172988
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_ffac78ebeaab5d3475d5e3b3d432a3503332f864
+    created: 1768873367411
+    modified: 1768873367411
+environments:
+  name: Base Environment
+  meta:
+    id: env_ffac78ebeaab5d3475d5e3b3d432a3503332f864
+    created: 1768873357974
+    modified: 1768873357974
+    isPrivate: false

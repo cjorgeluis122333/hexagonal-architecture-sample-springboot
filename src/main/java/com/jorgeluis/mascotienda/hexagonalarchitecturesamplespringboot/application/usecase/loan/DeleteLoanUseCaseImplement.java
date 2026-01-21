@@ -1,6 +1,6 @@
-package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.usecase;
+package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.usecase.loan;
 
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase.DeleteLoanUseCase;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase.loan.DeleteLoanUseCase;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.out.LoanRepositoryPort;
 import lombok.AllArgsConstructor;
 

@@ -1,8 +1,8 @@
-package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.usecase;
+package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.usecase.loan;
 
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.exception.ResourceNotFoundException;
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase.FindLoanUseCase;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.loan.Loan;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase.loan.FindLoanUseCase;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.out.LoanRepositoryPort;
 import lombok.AllArgsConstructor;
 

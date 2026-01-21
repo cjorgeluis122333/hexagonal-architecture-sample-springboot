@@ -1,8 +1,8 @@
 package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.rest;
 
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.application.service.LoanApplicationService;
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Money;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.loan.Loan;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.loan.Money;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.command.CreateLoanCommand;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.request.LoanRequest;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.input.dto.response.LoanResponse;

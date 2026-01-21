@@ -1,6 +1,6 @@
-package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase;
+package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.usecase.loan;
 
-import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.Loan;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.model.loan.Loan;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.in.command.CreateLoanCommand;
 
 public interface UpdateLoanUseCase {
