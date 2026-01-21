@@ -63,10 +63,10 @@ Rest Controllers: Adaptadores de entrada para la API REST.
 
 ## 🛠️ Tecnologías Utilizadas
 
-> Java 17+
-> Spring Boot 4.0.0
-> Spring Data JPA
-> Postgres Sql
+1. > Java 17+
+2. > Spring Boot 4.0.0
+3. > Spring Data JPA
+4. > Postgres Sql
 
 ## 🚀 Configuración y Ejecución
 
