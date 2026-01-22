@@ -3,11 +3,15 @@ package com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.m
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class Loan {
+public class Loan implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final Long id;
     private final Money amount;
     private final String borrower;

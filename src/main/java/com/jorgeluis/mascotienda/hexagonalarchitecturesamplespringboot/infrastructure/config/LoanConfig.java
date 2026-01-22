@@ -16,6 +16,8 @@ import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.po
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.domain.ports.out.LoanRepositoryPort;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.output.external_api.adapter.ExternalServiceAdapter;
 import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.output.persisten.adapter.JpaLoanAdapter;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.output.persisten.adapter.RedisLoanAdapter;
+import com.jorgeluis.mascotienda.hexagonalarchitecturesamplespringboot.infrastructure.output.persisten.repository.JpaLoanRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,14 +26,11 @@ public class LoanConfig {
 
     //========================================    PORT to ADAPTER
     // (domain to infrastructure)
-    @Bean
-    LoanRepositoryPort loanRepositoryPort(JpaLoanAdapter jpaLoanAdapter) {
-        return jpaLoanAdapter;
-    }
 
+    //If I use redis always prefer  the redis adaptor so  will be redundant use Two LoanRepositoryPort
     @Bean
-    ExternalServicePort externalServicePort(ExternalServiceAdapter externalServiceAdapter) {
-        return externalServiceAdapter;
+    LoanRepositoryPort loanRepositoryPort(RedisLoanAdapter redisLoanAdapter) {
+        return redisLoanAdapter;
     }
 
 
@@ -60,11 +59,6 @@ public class LoanConfig {
         return new UpdateLoanUseCaseImplement(loanRepositoryPort);
     }
 
-    //Task
-    @Bean
-    GetAdditionalTaskInfoUseCase getAdditionalTaskInfoUseCase(ExternalServicePort externalServicePort) {
-        return new GetAdditionalTaskInfoUseCaseImpl(externalServicePort);
-    }
 
     //=======================================    SERVICE
     //Application to Application  <-- Domain  (Require domain interface)
@@ -75,10 +69,5 @@ public class LoanConfig {
         return new LoanApplicationService(createLoanUseCase, deleteLoanUseCase, findLoanUseCase, updateLoanUseCase);
     }
 
-    //Task
-    @Bean
-    TaskApplicationService taskApplicationService(GetAdditionalTaskInfoUseCase getAdditionalTaskInfoUseCase) {
-        return new TaskApplicationService(getAdditionalTaskInfoUseCase);
-    }
 
 }
