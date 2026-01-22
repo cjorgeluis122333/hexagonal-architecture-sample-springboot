@@ -45,9 +45,7 @@ com.tuempresa.loan
 ## Application (Servicios)
 
 Implementa la lógica de los casos de uso.
-
 Use Cases: Implementaciones de las interfaces de entrada (ej. GetAdditionalTaskInfoUseCaseImpl).
-
 Services: TaskService actúa como una fachada para agrupar las funcionalidades relacionadas con las tareas.
 
 ## Infrastructure (Adaptadores y Configuración)
