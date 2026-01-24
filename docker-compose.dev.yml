@@ -1,0 +1,30 @@
+# Just infrastructure you must execute the application normally form your id
+version: '3.9'
+
+services:
+  # Base de Datos (Para Desarrollo)
+  postgres-dev:
+    image: postgres:17.5
+    container_name: loan_db_dev
+    ports:
+      - "9092:5432" # Tu app en IntelliJ conectará a localhost:9091
+    environment:
+      POSTGRES_DB: loan_db
+      POSTGRES_USER: jcvidal
+      POSTGRES_PASSWORD: "123456"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+
+  # Redis (Para Desarrollo)
+  redis-dev:
+    image: redis:8.4.0
+    container_name: loan_redis_dev
+    ports:
+      - "8777:6379" # Tu app en IntelliJ conectará a localhost:8777
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_dev_data:/data
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data:

@@ -1,33 +1,26 @@
-# ==========================================
-# Etapa 1: Construcción (Build)
-# ==========================================
-FROM maven:3.9.5-eclipse-temurin-17 AS build
+# ETAPA 1: Build (Compilación)
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# 1. Copiamos solo el pom.xml primero para cachear las dependencias
+# Copiamos solo el pom primero para cachear las dependencias del m2
 COPY pom.xml .
-# 2. Descargamos dependencias (esto no se volverá a ejecutar si no cambias el pom)
+# Descargamos dependencias (si no cambias el pom, este paso se salta en futuros builds)
 RUN mvn dependency:go-offline -B
 
-# 3. Copiamos el código fuente y compilamos
+# Copiamos el código y empaquetamos
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# ==========================================
-# Etapa 2: Ejecución (Runtime)
-# ==========================================
+# ETAPA 2: Runtime (Ejecución ligera)
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# Copiamos el JAR generado en la etapa anterior
-# El wildcard *.jar toma el único jar generado.
+# Copiamos solo el JAR compilado
 COPY --from=build /app/target/*.jar app.jar
 
-# Variables de entorno por defecto (pueden sobreescribirse desde docker-compose)
+# Variables de entorno por defecto (se sobreescriben en el compose)
 ENV SERVER_PORT=8037
+ENV SPRING_PROFILES_ACTIVE=prod
 
-# Exponer el puerto
 EXPOSE 8037
-
-# Comando de inicio
 ENTRYPOINT ["java", "-jar", "app.jar"]

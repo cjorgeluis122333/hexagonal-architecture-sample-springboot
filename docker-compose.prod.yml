@@ -1,0 +1,63 @@
+#Objetivo: Simular un despliegue real. Aquí todo corre dentro de Docker. La aplicación
+#  Java se empaqueta y se comunica con la base de datos usando la red interna de Docker, no localhost.
+version: '3.9'
+
+services:
+  # Base de Datos (Producción)
+  postgres-prod:
+    image: postgres:17.5
+    container_name: loan_db_prod
+    restart: always
+    environment:
+      POSTGRES_DB: loan_db
+      POSTGRES_USER: jcvidal
+      POSTGRES_PASSWORD: "123456"
+    # En producción a veces NO exponemos el puerto de DB hacia afuera por seguridad,
+    # pero lo dejo aquí por si necesitas inspeccionar.
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jcvidal -d loan_db"]
+      interval: 5s
+      retries: 5
+
+  # Redis (Producción)
+  redis-prod:
+    image: redis:8.4.0
+    container_name: loan_redis_prod
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_prod_data:/data
+
+  # TU APLICACIÓN (Construida desde el Dockerfile)
+  app-prod:
+    container_name: loan_service_app
+    build: .  # Usa el Dockerfile del directorio actual
+    restart: always
+    ports:
+      - "8037:8037" # Solo exponemos la API al mundo
+    environment:
+      # SOBRESCRIBIMOS LA CONFIGURACIÓN LOCAL
+      # Aquí usamos los nombres de los servicios (postgres-prod, redis-prod)
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-prod:5432/loan_db
+      - SPRING_DATASOURCE_USERNAME=jcvidal
+      - SPRING_DATASOURCE_PASSWORD=123456
+
+      # Redis Config
+      - REDIS_HOST=redis-prod
+      - REDIS_PORT=6379  # Puerto INTERNO de Redis
+
+      # Perfil
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      postgres-prod:
+        condition: service_healthy
+      redis-prod:
+        condition: service_started
+
+volumes:
+  postgres_prod_data:
+  redis_prod_data:
