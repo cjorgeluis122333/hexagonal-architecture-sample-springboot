@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+  # ----------------------------------------------------------------
+  # Base de Datos PostgreSQL
+  # ----------------------------------------------------------------
+  postgres-db:
+    image: postgres:16-alpine # Usamos una versión estable y ligera (Alpine)
+    container_name: hexagonal_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: loan_db
+      POSTGRES_USER: jcvidal
+      POSTGRES_PASSWORD: "123456"
+    ports:
+      - "9092:5432" # Puerto externo 9092 -> Interno 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jcvidal -d loan_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------
+  # Motor de Caché Redis
+  # ----------------------------------------------------------------
+  redis-cache:
+    image: redis:7.2-alpine # Versión estable recomendada
+    container_name: hexagonal_redis
+    restart: always
+    ports:
+      - "8777:6379" # Puerto externo 8777 -> Interno 6379
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+
+  # ----------------------------------------------------------------
+  # Tu Aplicación Java (El servicio que faltaba)
+  # ----------------------------------------------------------------
+  app:
+    container_name: hexagonal_app
+    build: . # Esto le dice: "Busca el Dockerfile en la carpeta actual y constrúyelo"
+    restart: on-failure
+    ports:
+      - "8037:8037"
+    environment:
+      # CONFIGURACIÓN DE RED INTERNA DOCKER
+      # Aquí usamos los nombres de los servicios definidos arriba, NO localhost
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/loan_db
+      - SPRING_DATASOURCE_USERNAME=jcvidal
+      - SPRING_DATASOURCE_PASSWORD=123456
+
+      # REDIS (Nota que usamos el puerto interno 6379, no el 8777)
+      - REDIS_HOST=redis-cache
+      - REDIS_PORT=6379
+
+      # Perfil de Spring (opcional)
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      redis-cache:
+        condition: service_started
+
+volumes:
+  postgres_data:
+  redis_data:
