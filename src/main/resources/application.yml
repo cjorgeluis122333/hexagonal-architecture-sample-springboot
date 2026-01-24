@@ -1,47 +1,70 @@
 server:
-  port: 8037
+  port: ${PORT:8037} # Permite cambiar el puerto del servidor por variable de entorno
 
 spring:
- #REDIS CONFIG
+  application:
+    name: hexagonal-loan-service
+
+  # CONFIGURACIÓN DE BASE DE DATOS
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:9092}/loan_db
+    username: ${DB_USER:jcvidal}
+    password: ${DB_PASSWORD:123456}
+    driver-class-name: org.postgresql.Driver
+    # Configuración de Pool (Hikari) para evitar fugas de conexiones
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+
+  # CONFIGURACIÓN DE REDIS
   data:
     redis:
       host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:8777}    #6379
+      port: ${REDIS_PORT:8777}
       password: ${REDIS_PASSWORD:}
-      connect-timeout: 2000ms # No esperar más de 2s para conectar
-      timeout: 500ms         # No esperar más de 500ms por una respuesta (Redis debe ser rápido)
+      connect-timeout: 2000ms
+      timeout: 500ms
       lettuce:
         pool:
-          max-active: 8      # Número máximo de conexiones simultáneas
-          max-idle: 8        # Conexiones en espera
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+          max-wait: 1000ms
 
-  application:
-    name: "hexagonal-loan-service"
-
-  datasource:
-    url: "jdbc:postgresql://localhost:9091/loan_db"
-    username: "jcvidal"
-    password: "123456"
-    driver-class-name: "org.postgresql.Driver"
-
+  # JPA / HIBERNATE
   jpa:
-    open-in-view: false
+    open-in-view: false # Crucial para rendimiento (evita el problema N+1 accidental)
     hibernate:
-      ddl-auto: "create"
+      ddl-auto: update # Cambiado de 'create' a 'update' para no perder datos al reiniciar
+    show-sql: false # Usamos logging.level para controlar esto de forma más fina
     properties:
       hibernate:
         format_sql: true
         jdbc.batch_size: 25
+        order_inserts: true
+        order_updates: true
 
+  # SERIALIZACIÓN
   jackson:
     date-format: "yyyy-MM-dd'T'HH:mm:ss"
-    default-property-inclusion: "non_null"
-  web:
-    error:
-      include-message: "always"
-      include-binding-errors: "always"
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-unknown-properties: false
 
+  # MANEJO DE ERRORES WEB
+  web:
+    resources:
+      add-mappings: true
+    error:
+      include-message: always
+      include-binding-errors: always
+
+# LOGGING
 logging:
   level:
-    root: "INFO"
-    com.jorgeluis.mascotienda: "DEBUG"
+    root: INFO
+    com.jorgeluis.mascotienda: DEBUG
+    # Opcional: ver los parámetros de las consultas SQL
+    org.hibernate.orm.jdbc.bind: TRACE
