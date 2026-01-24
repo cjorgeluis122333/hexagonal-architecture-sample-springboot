@@ -1,10 +1,20 @@
 server:
   port: 8037
-  error:
-    include-message: "always"
-    include-binding-errors: "always"
 
 spring:
+ #REDIS CONFIG
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:8777}    #6379
+      password: ${REDIS_PASSWORD:}
+      connect-timeout: 2000ms # No esperar más de 2s para conectar
+      timeout: 500ms         # No esperar más de 500ms por una respuesta (Redis debe ser rápido)
+      lettuce:
+        pool:
+          max-active: 8      # Número máximo de conexiones simultáneas
+          max-idle: 8        # Conexiones en espera
+
   application:
     name: "hexagonal-loan-service"
 
@@ -26,6 +36,10 @@ spring:
   jackson:
     date-format: "yyyy-MM-dd'T'HH:mm:ss"
     default-property-inclusion: "non_null"
+  web:
+    error:
+      include-message: "always"
+      include-binding-errors: "always"
 
 logging:
   level:
