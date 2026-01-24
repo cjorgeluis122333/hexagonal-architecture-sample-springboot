@@ -1,7 +1,3 @@
-# Todo
-1. Fixed the Redis implementation
-2. Config the application.properties for it accept redis
-
 # Hexagonal Architecture
 
 Este proyecto implementa un sistema de gestión de tareas utilizando Arquitectura Hexagonal (Puertos y Adaptadores). El
@@ -69,6 +65,7 @@ Rest Controllers: Adaptadores de entrada para la API REST.
 2. > Spring Boot 4.0.0
 3. > Spring Data JPA
 4. > Postgres Sql
+5. > Redis   
 
 ## 🚀 Configuración y Ejecución
 
@@ -99,4 +96,16 @@ git clone https://github.com/cjorgeluis122333/hexagonal-architecture-sample-spri
   "title": "Aprender Arquitectura Hexagonal",
   "description": "Estudiar la separación de capas y puertos"
 }
+```
+
+## Escenario A: Modo Desarrollo (Solo Infraestructura)
+```shell
+# Levanta solo Postgres y Redis, ignora la app de Java
+docker-compose up -d postgres-db redis-cache
+```
+
+## Escenario B: Modo Producción / Test Completo
+```shell
+# --build fuerza a que se recompìle el .jar y la imagen de Docker
+docker-compose up --build -d
 ```
