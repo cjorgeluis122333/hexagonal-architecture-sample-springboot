@@ -1,3 +1,7 @@
+# Todo
+1. Fixed the Redis implementation
+2. Config the application.properties for it accept redis
+
 # Hexagonal Architecture
 
 Este proyecto implementa un sistema de gestión de tareas utilizando Arquitectura Hexagonal (Puertos y Adaptadores). El
