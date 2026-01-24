@@ -104,8 +104,12 @@ git clone https://github.com/cjorgeluis122333/hexagonal-architecture-sample-spri
 docker-compose up -d postgres-db redis-cache
 ```
 
-## Escenario B: Modo Producción / Test Completo
+# Up the container
+## Dev container
 ```shell
-# --build fuerza a que se recompìle el .jar y la imagen de Docker
-docker-compose up --build -d
+docker-compose -f docker-compose.dev.yml up -d
+```
+## Production Container
+```shell
+docker-compose -f docker-compose.prod.yml up --build -d
 ```
